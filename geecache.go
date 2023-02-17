@@ -70,7 +70,7 @@ func (g *Group) load(key string) (ByteView, error) {
 func (g *Group) getLocally(key string) (ByteView, error) {
 	bytes, err := g.getter.Get(key)
 	if err != nil {
-		return ByteView{}, nil
+		return ByteView{}, err
 	}
 	value := ByteView{b: bytes}
 	g.populateCache(key, value)
