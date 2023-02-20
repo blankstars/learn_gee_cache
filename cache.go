@@ -1,4 +1,4 @@
-package learn_gee_cache
+package gee_cache
 
 // 并发控制
 

@@ -1,4 +1,4 @@
-package learn_gee_cache
+package gee_cache
 
 // 缓存值的抽象与封装
 
