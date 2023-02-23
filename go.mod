@@ -1,3 +1,3 @@
-module github.com/blankstars/learn_gee_cache
+module github.com/blankstars/gee_cache
 
 go 1.19

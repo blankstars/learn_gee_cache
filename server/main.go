@@ -1,8 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	gee_cache "github.com/blankstars/gee_cache"
+	"github.com/blankstars/gee_cache"
 	"log"
 	"net/http"
 )
@@ -25,8 +26,12 @@ func createGroup() *gee_cache.Group {
 
 }
 
-func startCacheServer() {
-	// TODO:
+func startCacheServer(addr string, addrs []string, gee *gee_cache.Group) {
+	peers := gee_cache.NewHTTPPool(addr)
+	peers.Set(addrs...)
+	gee.RegisterPeers(peers)
+	log.Println("gee cache is running at", addr)
+	log.Fatal(http.ListenAndServe(addr[7:], peers))
 }
 
 func startAPIServer(apiAddr string, gee *gee_cache.Group) {
@@ -45,9 +50,27 @@ func startAPIServer(apiAddr string, gee *gee_cache.Group) {
 }
 
 func main() {
+	var port int
+	var api bool
+	flag.IntVar(&port, "port", 9001, "Geecache server port")
+	flag.BoolVar(&api, "api", false, "Start a api server")
+	flag.Parse()
 
-	addr := ":8080"
-	peers := gee_cache.NewHTTPPool(addr)
-	log.Println("geecache is running at", addr)
-	log.Fatal(http.ListenAndServe(addr, peers))
+	apiAddr := "http://localhost:9999"
+	addrMap := map[int]string {
+		9001:"http://localhost:9001",
+		9002:"http://localhost:9002",
+		9003:"http://localhost:9003",
+	}
+
+	var addrs []string
+	for _, v := range addrMap {
+		addrs = append(addrs, v)
+	}
+
+	gee := createGroup()
+	if api {
+		go startAPIServer(apiAddr, gee)
+	}
+	startCacheServer(addrMap[port], addrs, gee)
 }

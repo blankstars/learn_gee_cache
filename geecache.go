@@ -90,7 +90,6 @@ func (g *Group) getFromPeer(peer PeerGetter, key string) (ByteView, error) {
 		return ByteView{}, err
 	}
 	return ByteView{bytes}, nil
-
 }
 
 func (g *Group) getLocally(key string) (ByteView, error) {
