@@ -3,7 +3,7 @@ package gee_cache
 // 并发控制
 
 import (
-	"github.com/blankstars/learn_gee_cache/lru"
+	"github.com/blankstars/gee_cache/lru"
 	"sync"
 )
 

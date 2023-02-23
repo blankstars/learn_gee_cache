@@ -2,7 +2,7 @@ package gee_cache
 
 import (
 	"fmt"
-	"github.com/blankstars/learn_gee_cache/consistenthash"
+	"github.com/blankstars/gee_cache/consistenthash"
 	"io/ioutil"
 	"log"
 	"net/http"
